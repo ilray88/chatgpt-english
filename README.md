@@ -4,6 +4,8 @@ ChatGPT 对话助手是一个基于 OpenAI GPT-4 的聊天助手应用，它能�
 
 ![ChatGPT 对话助手](./demo.png)
 
+在线访问地址: https://software.wangzai.top/chat.html
+
 ## 功能
 
 - 语音识别 (Speech-to-Text)：将用户的语音输入转换为文本
@@ -13,6 +15,7 @@ ChatGPT 对话助手是一个基于 OpenAI GPT-4 的聊天助手应用，它能�
 
 ## 系统要求
 目前，由于个人能力有限，ChatGPT 对话助手仅支持本地Windows访问,欢迎大家多提交代码优化，让这个项目变得更好，以便更多人可以使用。
+
 
 ## 安装与运行
 

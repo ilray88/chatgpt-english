@@ -15,7 +15,7 @@
             padding: 0;
         }
 
-        h1 {
+        h1, h2 {
             text-align: center;
             margin-top: 30px;
             margin-bottom: 20px;
@@ -35,7 +35,6 @@
             height: 700px;
         }
 
-
         .message {
             display: flex;
             align-items: flex-start;
@@ -51,7 +50,6 @@
             justify-content: flex-end;
         }
 
-
         .message img {
             width: 40px;
             height: 40px;
@@ -62,8 +60,8 @@
             padding: 8px 16px;
             border-radius: 12px;
             margin-left: 10px;
+            max-width: 70%;
         }
-
 
         .message.user .message-content {
             background-color: #3f51b5;
@@ -108,7 +106,7 @@
             cursor: not-allowed;
         }
 
-        #api-settings {
+        #api-settings, #tutorial {
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -120,7 +118,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        #api-settings label {
+        #api-settings label, #tutorial h3 {
             font-size: 1em;
             font-weight: bold;
         }
@@ -132,11 +130,26 @@
             border-radius: 5px;
         }
 
-        .message-content {
-            padding: 8px 16px;
-            border-radius: 12px;
-            margin-left: 10px;
-            max-width: 70%;
+        #tutorial {
+            text-align: left;
+        }
+
+        #tutorial li {
+            margin-bottom: 10px;
+        }
+
+        #tutorial ol {
+            list-style-type: decimal;
+            padding-inline-start: 20px;
+        }
+
+        a {
+            color: #1e90ff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
 
 
@@ -155,192 +168,229 @@
     </div>
 </div>
 <div id="api-settings">
-    <label for="speech-api-key">订阅密钥：</label>
-    <input id="speech-api-key" type="text" placeholder="输入订阅密钥">
+    <label for="speech-api-key">微软Speech订阅密钥：</label>
+    <input id="speech-api-key" type="text" placeholder="输入订阅密钥,示例:8fb4bd00674448bb8dd641170a7710e5">
     <label for="chatgpt-api-key">ChatGPT API 密钥：</label>
     <input id="chatgpt-api-key" type="text" placeholder="输入 ChatGPT API 密钥">
     <label for="translate-api-key">翻译 API App ID：</label>
-    <input id="translate-app-id" type="text" placeholder="输入百度翻译 App ID">
+    <input id="translate-app-id" type="text" placeholder="输入百度翻译 App ID,示例:20230319001606010">
     <label for="translate-api-key">百度翻译 API 密钥：</label>
-    <input id="translate-api-key" type="text" placeholder="输入百度翻译 API 密钥">
+    <input id="translate-api-key" type="text" placeholder="输入百度翻译 API 密钥,示例:CcSzgPbtrxcSxZKMV1rI">
 </div>
 <div id="controls">
     <button id="start-dialogue" disabled>开始对话</button>
 </div>
-<script>
-    const startDialogueButton = document.getElementById("start-dialogue");
-    const speechApiKeyInput = document.getElementById("speech-api-key");
-    const chatGptApiKeyInput = document.getElementById("chatgpt-api-key");
-    const translateApiKeyInput = document.getElementById("translate-api-key");
-    const translateAppIdInput = document.getElementById("translate-app-id");
+<div>
+    <h2>如何申请 API 密钥：</h2>
+    <div id="tutorial">
+        <ol>
+            <li>
+                <h3>申请百度翻译 API：</h3>
+                <ol>
+                    <li>访问 <a href="https://api.fanyi.baidu.com/" target="_blank">百度翻译开放平台</a>。</li>
+                    <li>点击“立即使用”，登录百度账号。</li>
+                    <li>在个人中心，创建应用并获取 App ID 和 API 密钥。</li>
+                    <li>将获取的 App ID 和 API 密钥填入上面的输入框。</li>
+                </ol>
+            </li>
+            <li>
+                <h3>申请微软 Speech API：</h3>
+                <ol>
+                    <li>访问 <a href="https://portal.azure.com/" target="_blank">Azure 门户</a>。</li>
+                    <li>登录您的 Azure 账号，如果没有，需要先注册。</li>
+                    <li>点击左侧的“创建资源”，然后搜索并选择“Speech”。</li>
+                    <li>创建并配置Speech服务实例。区域请选择美区!</li>
+                    <li>在概述页面中，找到密钥和终结点部分，复制密钥1或密钥2。</li>
+                    <li>将获取的密钥填入上面的微软Speech订阅密钥输入框。</li>
+                </ol>
+            </li>
+            <li>
+                <h3>申请 ChatGPT API：</h3>
+                <ol>
+                    <li>访问 <a href="https://openai.com/" target="_blank">OpenAI官网</a>。</li>
+                    <li>点击右上角的“Sign Up”，创建一个OpenAI账号。</li>
+                    <li>登录账号后，点击右上角的用户名，选择“API Keys”。</li>
+                    <li>点击“Create API Key”创建一个新的API密钥。</li>
+                    <li>复制新生成的API密钥。</li>
+                    <li>将获取的API密钥填入上面的ChatGPT API密钥输入框。</li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+    <script>
+        const startDialogueButton = document.getElementById("start-dialogue");
+        const speechApiKeyInput = document.getElementById("speech-api-key");
+        const chatGptApiKeyInput = document.getElementById("chatgpt-api-key");
+        const translateApiKeyInput = document.getElementById("translate-api-key");
+        const translateAppIdInput = document.getElementById("translate-app-id");
 
-    const SpeechSDK = window.SpeechSDK;
+        const SpeechSDK = window.SpeechSDK;
 
 
-    const chatContainer = document.getElementById('chat-container');
-    const sendBtn = document.getElementById('start-dialogue');
+        const chatContainer = document.getElementById('chat-container');
+        const sendBtn = document.getElementById('start-dialogue');
 
-    // 载入页面时检查本地存储中是否有聊天记录
-    function loadChatHistory() {
-        const chatHistory = localStorage.getItem('chatHistory');
-        if (chatHistory) {
-            chatContainer.innerHTML = chatHistory;
+        // 载入页面时检查本地存储中是否有聊天记录
+        function loadChatHistory() {
+            const chatHistory = localStorage.getItem('chatHistory');
+            if (chatHistory) {
+                chatContainer.innerHTML = chatHistory;
+            }
         }
-    }
 
-    // 将新的聊天记录添加到本地存储
-    function saveChatHistory() {
-        localStorage.setItem('chatHistory', chatContainer.innerHTML);
-    }
-
-    // 清除本地存储（可选）
-    function clearChatHistory() {
-        localStorage.removeItem('chatHistory');
-    }
-
-
-    // 发送按钮事件监听
-    sendBtn.addEventListener('click', () => {
         // 将新的聊天记录添加到本地存储
-        saveChatHistory();
-    });
+        function saveChatHistory() {
+            localStorage.setItem('chatHistory', chatContainer.innerHTML);
+        }
 
-    // 页面关闭或刷新时清除聊天记录（可选）
-    // window.addEventListener('beforeunload', () => {
-    //     clearChatHistory();
-    // });
-
-
-    function saveChatHistory() {
-        const chatHistory = chatContainer.innerHTML;
-        localStorage.setItem("chatHistory", chatHistory);
-    }
+        // 清除本地存储（可选）
+        function clearChatHistory() {
+            localStorage.removeItem('chatHistory');
+        }
 
 
-    async function requestApi(text) {
-        const apiUrl = "https://api.openai.com/v1/chat/completions";
-        const apiKey = chatGptApiKeyInput.value;
-
-        const response = await fetch(apiUrl, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${apiKey}`
-            },
-            body: JSON.stringify({
-                model: "gpt-3.5-turbo",
-                messages: [{role: "user", content: text}],
-                temperature: 0.7,
-            }),
+        // 发送按钮事件监听
+        sendBtn.addEventListener('click', () => {
+            // 将新的聊天记录添加到本地存储
+            saveChatHistory();
         });
 
-        const responseData = await response.json();
-        return responseData.choices[0].message.content;
-    }
+        // 页面关闭或刷新时清除聊天记录（可选）
+        // window.addEventListener('beforeunload', () => {
+        //     clearChatHistory();
+        // });
 
-    async function speechToText() {
-        const subscriptionKey = speechApiKeyInput.value;
-        const serviceRegion = "eastus";
 
-        return new Promise((resolve, reject) => {
-            const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(subscriptionKey, serviceRegion);
-            const audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
-            const recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
+        function saveChatHistory() {
+            const chatHistory = chatContainer.innerHTML;
+            localStorage.setItem("chatHistory", chatHistory);
+        }
 
-            recognizer.recognizeOnceAsync(
-                (result) => {
-                    recognizer.close();
-                    resolve(result.text);
+
+        async function requestApi(text) {
+            const apiUrl = "https://api.openai.com/v1/chat/completions";
+            const apiKey = chatGptApiKeyInput.value;
+
+            const response = await fetch(apiUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${apiKey}`
                 },
-                (err) => {
-                    recognizer.close();
-                    reject(err);
-                }
-            );
-        });
-    }
-
-    function textToSpeech(text) {
-        const subscriptionKey = speechApiKeyInput.value;
-        const serviceRegion = "eastus";
-
-        return new Promise((resolve, reject) => {
-            const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(subscriptionKey, serviceRegion);
-            const synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig);
-
-            synthesizer.speakTextAsync(
-                text,
-                (result) => {
-                    synthesizer.close();
-                    resolve(result);
-                },
-                (err) => {
-                    synthesizer.close();
-                    reject(err);
-                }
-            );
-        });
-    }
-
-
-    async function translateText(text, toLang) {
-        try {
-            const appId = translateAppIdInput.value;
-            const appKey = translateApiKeyInput.value;
-            const salt = (new Date()).getTime();
-            const query = text;
-            const sign = CryptoJS.MD5(appId + query + salt + appKey).toString();
-
-            const response = await new Promise((resolve, reject) => {
-                $.ajax({
-                    url: "https://fanyi-api.baidu.com/api/trans/vip/translate",
-                    type: "get",
-                    dataType: "jsonp",
-                    data: {
-                        q: query,
-                        appid: appId,
-                        salt: salt,
-                        from: "en",
-                        to: "zh",
-                        sign: sign,
-                    },
-                    success: function (data) {
-                        resolve(data);
-                    },
-                    error: function (error) {
-                        reject(error);
-                    },
-                });
+                body: JSON.stringify({
+                    model: "gpt-3.5-turbo",
+                    messages: [{role: "user", content: text}],
+                    temperature: 0.7,
+                }),
             });
 
-            console.log(response);
-            console.log(response.trans_result[0].dst);
-            return response.trans_result[0].dst;
-        } catch (error) {
-            console.error("翻译过程中出现错误：", error);
-            return "";
+            const responseData = await response.json();
+            return responseData.choices[0].message.content;
         }
-    }
+
+        async function speechToText() {
+            const subscriptionKey = speechApiKeyInput.value;
+            const serviceRegion = "eastus";
+
+            return new Promise((resolve, reject) => {
+                const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(subscriptionKey, serviceRegion);
+                const audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
+                const recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
+
+                recognizer.recognizeOnceAsync(
+                    (result) => {
+                        recognizer.close();
+                        resolve(result.text);
+                    },
+                    (err) => {
+                        recognizer.close();
+                        reject(err);
+                    }
+                );
+            });
+        }
+
+        function textToSpeech(text) {
+            const subscriptionKey = speechApiKeyInput.value;
+            const serviceRegion = "eastus";
+
+            return new Promise((resolve, reject) => {
+                const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(subscriptionKey, serviceRegion);
+                const synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig);
+
+                synthesizer.speakTextAsync(
+                    text,
+                    (result) => {
+                        synthesizer.close();
+                        resolve(result);
+                    },
+                    (err) => {
+                        synthesizer.close();
+                        reject(err);
+                    }
+                );
+            });
+        }
 
 
-    function addMessage(role, text, translation) {
-        const chatContainer = document.getElementById("chat-container");
-        const messageElement = document.createElement("div");
-        messageElement.classList.add("message", role);
+        async function translateText(text, toLang) {
+            try {
+                const appId = translateAppIdInput.value;
+                const appKey = translateApiKeyInput.value;
+                const salt = (new Date()).getTime();
+                const query = text;
+                const sign = CryptoJS.MD5(appId + query + salt + appKey).toString();
 
-        const avatarUrl = role === "user" ? "https://www.wangwangit.com/images/head/a.webp" : "https://raw.githubusercontent.com/Chanzhaoyu/chatgpt-web/main/public/favicon.ico"; // 替换为相应的头像 URL
+                const response = await new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: "https://fanyi-api.baidu.com/api/trans/vip/translate",
+                        type: "get",
+                        dataType: "jsonp",
+                        data: {
+                            q: query,
+                            appid: appId,
+                            salt: salt,
+                            from: "en",
+                            to: "zh",
+                            sign: sign,
+                        },
+                        success: function (data) {
+                            resolve(data);
+                        },
+                        error: function (error) {
+                            reject(error);
+                        },
+                    });
+                });
 
-        if (translation) { // 检查翻译是否为空
-            if (role === "user") {
-                messageElement.innerHTML = `
+                console.log(response);
+                console.log(response.trans_result[0].dst);
+                return response.trans_result[0].dst;
+            } catch (error) {
+                console.error("翻译过程中出现错误：", error);
+                return "";
+            }
+        }
+
+
+        function addMessage(role, text, translation) {
+            const chatContainer = document.getElementById("chat-container");
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("message", role);
+
+            const avatarUrl = role === "user" ? "https://www.wangwangit.com/images/head/a.webp" : "https://raw.githubusercontent.com/Chanzhaoyu/chatgpt-web/main/public/favicon.ico"; // 替换为相应的头像 URL
+
+            if (translation) { // 检查翻译是否为空
+                if (role === "user") {
+                    messageElement.innerHTML = `
         <img src="${avatarUrl}" alt="${role === "user" ? "用户" : "助手"}">
         <div class="message-content">
             <p>${text}</p>
                          ${translation !== null ? `<p>${translation}</p>` : ""}
         </div>
     `;
-            } else {
-                messageElement.innerHTML = `
+                } else {
+                    messageElement.innerHTML = `
         <div class="message-content">
             <p>${text}</p>
                                  ${translation !== null ? `<p>${translation}</p>` : ""}
@@ -348,127 +398,127 @@
 
         <img src="${avatarUrl}" alt="${role === "user" ? "用户" : "助手"}">
     `;
-            }
-        } else {
-
-            if (role === "user") {
-                messageElement.innerHTML = `
-        <img src="${avatarUrl}" alt="${role === "user" ? "用户" : "助手"}">
-        <div class="message-content">
-            <p>${text}</p>
-
-        </div>
-    `;
+                }
             } else {
-                messageElement.innerHTML = `
+
+                if (role === "user") {
+                    messageElement.innerHTML = `
+        <img src="${avatarUrl}" alt="${role === "user" ? "用户" : "助手"}">
+        <div class="message-content">
+            <p>${text}</p>
+
+        </div>
+    `;
+                } else {
+                    messageElement.innerHTML = `
         <div class="message-content">
             <p>${text}</p>
 
         </div>
         <img src="${avatarUrl}" alt="${role === "user" ? "用户" : "助手"}">
     `;
+                }
+            }
+
+
+            chatContainer.appendChild(messageElement);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            // 在将消息添加到聊天界面后，保存聊天记录
+            saveChatHistory();
+        }
+
+
+        async function splitAndTranslateText(text, targetLang) {
+            const sentences = text.split('.').filter(sentence => sentence.trim() !== '');
+            const translatedSentences = await Promise.all(sentences.map(sentence => translateText(sentence.trim(), targetLang)));
+            return translatedSentences.join('。');
+        }
+
+
+        async function startDialogue() {
+            try {
+                startDialogueButton.disabled = true;
+
+                // 语音转文字
+                const inputText = await speechToText();
+                // 翻译响应文本
+                const userTranslateText = await translateText(inputText, "zh");
+                console.info("User input:", inputText, userTranslateText)
+                addMessage("user", inputText, userTranslateText);
+
+                // 请求 ChatGPT API
+                const responseText = await requestApi(inputText);
+
+                // 文字转语音
+                await textToSpeech(responseText);
+
+                // 翻译响应文本
+                const translatedResponse = await splitAndTranslateText(responseText, "zh");
+                addMessage("assistant", responseText, translatedResponse);
+
+            } catch (error) {
+                console.error("Error during dialogue:", error);
+            } finally {
+                startDialogueButton.disabled = false;
             }
         }
 
-
-        chatContainer.appendChild(messageElement);
-        chatContainer.scrollTop = chatContainer.scrollHeight;
-
-        // 在将消息添加到聊天界面后，保存聊天记录
-        saveChatHistory();
-    }
-
-
-    async function splitAndTranslateText(text, targetLang) {
-        const sentences = text.split('.').filter(sentence => sentence.trim() !== '');
-        const translatedSentences = await Promise.all(sentences.map(sentence => translateText(sentence.trim(), targetLang)));
-        return translatedSentences.join('。');
-    }
-
-
-    async function startDialogue() {
-        try {
-            startDialogueButton.disabled = true;
-
-            // 语音转文字
-            const inputText = await speechToText();
-            // 翻译响应文本
-            const userTranslateText = await translateText(inputText, "zh");
-            console.info("User input:", inputText, userTranslateText)
-            addMessage("user", inputText, userTranslateText);
-
-            // 请求 ChatGPT API
-            const responseText = await requestApi(inputText);
-
-            // 文字转语音
-            await textToSpeech(responseText);
-
-            // 翻译响应文本
-            const translatedResponse = await splitAndTranslateText(responseText, "zh");
-            addMessage("assistant", responseText, translatedResponse);
-
-        } catch (error) {
-            console.error("Error during dialogue:", error);
-        } finally {
-            startDialogueButton.disabled = false;
+        function checkApiKeys() {
+            if (speechApiKeyInput.value && chatGptApiKeyInput.value && translateApiKeyInput.value) {
+                startDialogueButton.disabled = false;
+            } else {
+                startDialogueButton.disabled = true;
+            }
         }
-    }
 
-    function checkApiKeys() {
-        if (speechApiKeyInput.value && chatGptApiKeyInput.value && translateApiKeyInput.value) {
-            startDialogueButton.disabled = false;
+        if (SpeechSDK) {
+            speechApiKeyInput.addEventListener("input", checkApiKeys);
+            chatGptApiKeyInput.addEventListener("input", checkApiKeys);
+            translateApiKeyInput.addEventListener("input", checkApiKeys);
+            startDialogueButton.addEventListener("click", startDialogue);
         } else {
-            startDialogueButton.disabled = true;
+            console.error("Speech SDK not found.");
         }
-    }
-
-    if (SpeechSDK) {
-        speechApiKeyInput.addEventListener("input", checkApiKeys);
-        chatGptApiKeyInput.addEventListener("input", checkApiKeys);
-        translateApiKeyInput.addEventListener("input", checkApiKeys);
-        startDialogueButton.addEventListener("click", startDialogue);
-    } else {
-        console.error("Speech SDK not found.");
-    }
 
 
-    function saveInputValues() {
-        localStorage.setItem("speechApiKey", speechApiKeyInput.value);
-        localStorage.setItem("chatGptApiKey", chatGptApiKeyInput.value);
-        localStorage.setItem("translateApiKey", translateApiKeyInput.value);
-        localStorage.setItem("translateAppId", translateAppIdInput.value);
-    }
+        function saveInputValues() {
+            localStorage.setItem("speechApiKey", speechApiKeyInput.value);
+            localStorage.setItem("chatGptApiKey", chatGptApiKeyInput.value);
+            localStorage.setItem("translateApiKey", translateApiKeyInput.value);
+            localStorage.setItem("translateAppId", translateAppIdInput.value);
+        }
 
-    function loadInputValues() {
-        speechApiKeyInput.value = localStorage.getItem("speechApiKey") || "";
-        chatGptApiKeyInput.value = localStorage.getItem("chatGptApiKey") || "";
-        translateApiKeyInput.value = localStorage.getItem("translateApiKey") || "";
-        translateAppIdInput.value = localStorage.getItem("translateAppId") || "";
-        chatContainer.innerHTML = localStorage.getItem("chatHistory") || "";
-        startDialogueButton.disabled = false;
-        // 页面加载时显示聊天记录
-        loadChatHistory();
-    }
+        function loadInputValues() {
+            speechApiKeyInput.value = localStorage.getItem("speechApiKey") || "";
+            chatGptApiKeyInput.value = localStorage.getItem("chatGptApiKey") || "";
+            translateApiKeyInput.value = localStorage.getItem("translateApiKey") || "";
+            translateAppIdInput.value = localStorage.getItem("translateAppId") || "";
+            chatContainer.innerHTML = localStorage.getItem("chatHistory") || "";
+            startDialogueButton.disabled = false;
+            // 页面加载时显示聊天记录
+            loadChatHistory();
+        }
 
-    speechApiKeyInput.addEventListener("input", () => {
-        saveInputValues();
-        checkApiKeys();
-    });
-    chatGptApiKeyInput.addEventListener("input", () => {
-        saveInputValues();
-        checkApiKeys();
-    });
-    translateApiKeyInput.addEventListener("input", () => {
-        saveInputValues();
-        checkApiKeys();
-    });
-    translateAppIdInput.addEventListener("input", () => {
-        saveInputValues();
-        checkApiKeys();
-    });
+        speechApiKeyInput.addEventListener("input", () => {
+            saveInputValues();
+            checkApiKeys();
+        });
+        chatGptApiKeyInput.addEventListener("input", () => {
+            saveInputValues();
+            checkApiKeys();
+        });
+        translateApiKeyInput.addEventListener("input", () => {
+            saveInputValues();
+            checkApiKeys();
+        });
+        translateAppIdInput.addEventListener("input", () => {
+            saveInputValues();
+            checkApiKeys();
+        });
 
 
-    loadInputValues();
-</script>
+        loadInputValues();
+    </script>
 </body>
 </html>

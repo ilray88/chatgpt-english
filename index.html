@@ -290,7 +290,7 @@
 
         async function speechToText() {
             const subscriptionKey = speechApiKeyInput.value;
-            const serviceRegion = "eastus";
+            const serviceRegion = "southeastasia";
 
             return new Promise((resolve, reject) => {
                 const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(subscriptionKey, serviceRegion);
@@ -312,7 +312,7 @@
 
         function textToSpeech(text) {
             const subscriptionKey = speechApiKeyInput.value;
-            const serviceRegion = "eastus";
+            const serviceRegion = "southeastasia";
 
             return new Promise((resolve, reject) => {
                 const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(subscriptionKey, serviceRegion);
